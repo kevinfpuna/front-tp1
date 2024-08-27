@@ -1,0 +1,9 @@
+<div>
+  <h2>{{ proveedorId ? 'Editar Proveedor' : 'Agregar Nuevo Proveedor' }}</h2>
+
+  <label for="nombre">Nombre:</label>
+  <input [(ngModel)]="nombre" placeholder="Nombre del proveedor" />
+
+  <button (click)="saveProveedor()">Guardar</button>
+  <button routerLink="/proveedores">Cancelar</button>
+</div>

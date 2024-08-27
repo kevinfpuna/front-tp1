@@ -1,0 +1,35 @@
+<div>
+  <h2>{{ turno.idTurno ? 'Editar Turno' : 'Registrar Nuevo Turno' }}</h2>
+
+  <label for="fecha">Fecha:</label>
+  <input [(ngModel)]="turno.fecha" type="date" />
+
+  <label for="horaInicioAgendamiento">Hora Inicio Agendamiento:</label>
+  <select [(ngModel)]="turno.horaInicioAgendamiento">
+    <option *ngFor="let hora of horasDisponibles" [value]="hora">{{ hora }}</option>
+  </select>
+
+  <label for="horaFinAgendamiento">Hora Fin Agendamiento:</label>
+  <select [(ngModel)]="turno.horaFinAgendamiento">
+    <option *ngFor="let hora of horasDisponibles" [value]="hora">{{ hora }}</option>
+  </select>
+
+  <label for="proveedor">Proveedor:</label>
+  <select [(ngModel)]="turno.idProveedor">
+    <option *ngFor="let proveedor of proveedores" [value]="proveedor.idProveedor">{{ proveedor.nombre }}</option>
+  </select>
+
+  <label for="jaula">Jaula:</label>
+  <select [(ngModel)]="turno.idJaula">
+    <option *ngFor="let jaula of jaulas" [value]="jaula.idJaula">{{ jaula.nombre }}</option>
+  </select>
+
+  <h3>Productos</h3>
+  <div *ngFor="let producto of productos">
+    <label>{{ producto.nombre }}:</label>
+    <input type="number" (input)="addDetalle(producto.idProducto, $event)" />
+  </div>
+
+  <button (click)="saveTurno()">Guardar</button>
+  <button routerLink="/turnos">Cancelar</button>
+</div>

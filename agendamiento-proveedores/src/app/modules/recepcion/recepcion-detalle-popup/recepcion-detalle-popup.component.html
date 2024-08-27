@@ -1,0 +1,26 @@
+<div class="popup-background" *ngIf="turno">
+  <div class="popup-content">
+    <h3>Detalles del Turno {{ turno.idTurno }}</h3>
+    <p>Fecha: {{ turno.fecha }}</p>
+    <p>Hora Inicio: {{ turno.horaInicioAgendamiento }}</p>
+    <p>Hora Fin: {{ turno.horaFinAgendamiento }}</p>
+    <p>Proveedor: {{ turno.idProveedor }}</p>
+    <p>Jaula: {{ turno.idJaula }}</p>
+
+    <h4>Productos</h4>
+    <table>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+      </tr>
+      <tr *ngFor="let detalle of turno.detalles">
+        <td>{{ getNombreProducto(detalle.idProducto) }}</td> <!-- Mostrar nombre del producto -->
+        <td>{{ detalle.cantidad }}</td>
+      </tr>
+    </table>
+
+    <div class="popup-actions">
+      <button (click)="cerrarPopup()">Cerrar</button>
+    </div>
+  </div>
+</div>

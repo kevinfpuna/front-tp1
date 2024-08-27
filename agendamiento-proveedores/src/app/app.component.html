@@ -1,0 +1,18 @@
+<div class="app-container">
+  <header>
+    <h1>{{ title }}</h1>
+    <nav>
+      <a routerLink="/proveedores">Proveedores</a> |
+      <a routerLink="/productos">Productos</a> |
+      <a routerLink="/jaulas">Jaulas</a> |
+      <a routerLink="/turnos">Turnos</a> |
+      <a routerLink="/recepcion">Recepción</a>
+    </nav>
+  </header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <footer>
+    <p>© 2024 Sistema de Agendamiento de Atención a Proveedores</p>
+  </footer>
+</div>

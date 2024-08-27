@@ -1,0 +1,35 @@
+<table>
+  <tr>
+    <th>Inicio Agendamiento</th>
+    <th>Fin Agendamiento</th>
+    <th>Proveedor</th>
+    <th>Estado</th>
+    <th>Jaula</th>
+    <th>Hora Inicio Recepción</th>
+    <th>Hora Fin Recepción</th>
+    <th>Acciones</th>
+    <th>Detalles</th>
+  </tr>
+  <tr *ngFor="let turno of turnos">
+    <td>{{ turno.horaInicioAgendamiento }}</td>
+    <td>{{ turno.horaFinAgendamiento }}</td>
+    <td>{{ turno.idProveedor }}</td>
+    <td>{{ turno.estado }}</td>
+    <td>{{ turno.idJaula ? turno.idJaula : 'Sin Asignar' }}</td>
+    <td>{{ turno.horaInicioRecepcion ? turno.horaInicioRecepcion : 'N/A' }}</td>
+    <td>{{ turno.horaFinRecepcion ? turno.horaFinRecepcion : 'N/A' }}</td>
+    <td>
+      <button *ngIf="turno.estado === 'pendiente'" (click)="iniciarRecepcion(turno)">Iniciar Recepción</button>
+      <button *ngIf="turno.estado === 'en recepcion'" (click)="finalizarRecepcion(turno)">Finalizar Recepción</button>
+    </td>
+    <td>
+      <button (click)="verDetalles(turno)">Ver Detalles</button>
+    </td>
+  </tr>
+</table>
+
+<!-- Popup para iniciar o finalizar la recepción -->
+<app-recepcion-popup *ngIf="mostrarPopup" [turnoSeleccionado]="turnoSeleccionado" [esFinalizacion]="esFinalizacion" (aceptar)="onPopupAceptar()"></app-recepcion-popup>
+
+<!-- Popup para mostrar los detalles del turno -->
+<app-recepcion-detalle-popup *ngIf="mostrarDetallePopup" [turno]="turnoSeleccionado" (cerrar)="cerrarDetallePopup()"></app-recepcion-detalle-popup>

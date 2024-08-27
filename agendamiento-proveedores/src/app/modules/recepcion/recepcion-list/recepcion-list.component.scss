@@ -1,0 +1,33 @@
+$table-border-color: #ddd;
+$table-header-bg-color: #f2f2f2;
+$button-padding: 5px 10px;
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    border: 1px solid $table-border-color;
+    padding: 8px;
+    text-align: left;
+
+    &:first-child {
+      text-align: center;
+    }
+  }
+
+  th {
+    background-color: $table-header-bg-color;
+  }
+}
+
+button {
+  padding: $button-padding;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($table-header-bg-color, 10%);
+  }
+}

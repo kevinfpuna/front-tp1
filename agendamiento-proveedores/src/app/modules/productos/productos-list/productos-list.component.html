@@ -1,0 +1,17 @@
+<div>
+  <h2>Lista de Productos</h2>
+  <input [(ngModel)]="filtro" placeholder="Filtrar por nombre" />
+  <button (click)="loadProductos()">Refrescar</button>
+</div>
+
+<ul>
+  <li *ngFor="let producto of getFilteredProductos()">
+    {{ producto.nombre }}
+    <button (click)="deleteProducto(producto.idProducto)">Eliminar</button>
+    <button [routerLink]="['/productos/editar', producto.idProducto]">Editar</button>
+  </li>
+</ul>
+
+<div>
+  <a routerLink="/productos/nuevo">Agregar Nuevo Producto</a>
+</div>

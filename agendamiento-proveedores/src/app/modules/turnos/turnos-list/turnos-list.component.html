@@ -1,0 +1,18 @@
+<div>
+  <h2>Lista de Turnos</h2>
+</div>
+
+<ul>
+  <li *ngFor="let turno of turnos">
+    Fecha: {{ turno.fecha }},
+    Proveedor: {{ turno.idProveedor }},
+    Jaula: {{ turno.idJaula }},
+    Hora de Agendamiento: {{ turno.horaInicioAgendamiento }} - {{ turno.horaFinAgendamiento }}
+    <button [routerLink]="['/turnos/editar', turno.idTurno]">Editar</button>
+    <button (click)="deleteTurno(turno.idTurno)">Eliminar</button>
+  </li>
+</ul>
+
+<div>
+  <a routerLink="/turnos/nuevo">Registrar Nuevo Turno</a>
+</div>

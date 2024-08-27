@@ -1,0 +1,9 @@
+<div>
+  <h2>{{ productoId ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h2>
+
+  <label for="nombre">Nombre:</label>
+  <input [(ngModel)]="nombre" placeholder="Nombre del producto" />
+
+  <button (click)="saveProducto()">Guardar</button>
+  <button routerLink="/productos">Cancelar</button>
+</div>
