@@ -5,6 +5,8 @@ import { ProveedoresService } from '../../../services/proveedores.service';
 import { Proveedor } from '../../../models/proveedor.model';
 import { JaulasService } from '../../../services/jaulas.service'; // Importa el servicio de jaulas
 import { Jaula } from '../../../models/jaula.model'; // Importa el modelo de jaula
+import { ProductosService } from '../../../services/productos.service'; // Importa el servicio de productos
+import { Producto } from '../../../models/producto.model'; // Importa el modelo de producto
 
 @Component({
   selector: 'app-turnos-list',
@@ -15,16 +17,19 @@ export class TurnosListComponent implements OnInit {
   turnos: Turno[] = [];
   proveedores: { [id: number]: string } = {}; // Diccionario para almacenar los nombres de los proveedores
   jaulas: { [id: number]: string } = {}; // Diccionario para almacenar los nombres de las jaulas
+  productos: { [id: number]: string } = {}; // Diccionario para almacenar los nombres de los productos
   isExpanded: boolean[] = [];
 
   constructor(
     private turnosService: TurnosService,
     private proveedoresService: ProveedoresService,
-    private jaulasService: JaulasService // Añade el servicio de jaulas
+    private jaulasService: JaulasService, // Añade el servicio de jaulas
+    private productosService: ProductosService // Añade el servicio de productos
   ) {}
 
   ngOnInit(): void {
     this.loadTurnos();
+    this.cargarProductos(); // Cargar los productos
   }
 
   loadTurnos(): void {
@@ -45,6 +50,13 @@ export class TurnosListComponent implements OnInit {
 
     // Inicializar el estado expandido
     this.isExpanded = new Array(this.turnos.length).fill(false);
+  }
+
+  cargarProductos(): void {
+    const allProductos = this.productosService.getProductos(); // Suponiendo que este método obtiene los productos
+    allProductos.forEach((producto: Producto) => {
+      this.productos[producto.idProducto] = producto.nombre; // Guardar el nombre del producto
+    });
   }
 
   toggleDetalles(index: number): void {

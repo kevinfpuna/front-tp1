@@ -53,7 +53,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let detalle of turno.detalles">
-                  <td>{{ detalle.idProducto }}</td>
+                  <td>{{ productos[detalle.idProducto] || 'Producto no encontrado' }}</td> <!-- Mostrar el nombre del producto -->
                   <td>{{ detalle.cantidad }}</td>
                 </tr>
               </tbody>
