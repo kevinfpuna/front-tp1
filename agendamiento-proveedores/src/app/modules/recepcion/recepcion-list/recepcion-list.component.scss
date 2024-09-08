@@ -160,6 +160,40 @@
   }
 }
 
+.filtro-fecha {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  
+  label {
+    font-size: 1rem;
+    color: #333;
+    margin-right: 10px;
+  }
+
+  input[type="date"] {
+    padding: 5px 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  .btn {
+    padding: 6px 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #007bff; /* Azul */
+    color: white; /* Texto blanco */
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+    }
+  }
+}
+
 /* Animación de entrada para el popup */
 @keyframes fadeIn {
   from {

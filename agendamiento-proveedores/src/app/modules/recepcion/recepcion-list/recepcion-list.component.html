@@ -1,6 +1,13 @@
 <div class="table-container">
   <h2>Lista de Recepción de Turnos</h2>
 
+  <!-- Filtro de fecha único -->
+  <div class="filtro-fecha">
+    <label for="fechaFiltro">Fecha</label>
+    <input type="date" id="fechaFiltro" [(ngModel)]="fechaFiltro">
+    <button class="btn" (click)="filtrarPorFecha()">Filtrar</button>
+  </div>
+
   <table>
     <thead>
       <tr>
@@ -16,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let turno of turnos">
+      <tr *ngFor="let turno of turnosFiltrados">
         <td>{{ turno.horaInicioAgendamiento }}</td>
         <td>{{ turno.horaFinAgendamiento }}</td>
         <td>{{ proveedores[turno.idProveedor] || 'N/A' }}</td>

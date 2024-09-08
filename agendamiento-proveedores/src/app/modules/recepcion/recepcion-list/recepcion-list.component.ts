@@ -12,8 +12,10 @@ import { Router } from '@angular/router';
 })
 export class RecepcionListComponent implements OnInit {
   turnos: Turno[] = [];
+  turnosFiltrados: Turno[] = []; // Lista de turnos filtrados
   proveedores: { [id: number]: string } = {};
   jaulas: { [id: number]: string } = {};
+  fechaFiltro: string | null = null; // Fecha única para el filtro
   turnoSeleccionado: Turno | null = null;
   mostrarPopup: boolean = false;
   esFinalizacion: boolean = false;
@@ -33,6 +35,7 @@ export class RecepcionListComponent implements OnInit {
 
   buscarTurnos(): void {
     this.turnos = this.turnosService.getTurnos();
+    this.turnosFiltrados = [...this.turnos]; // Inicialmente, todos los turnos se muestran
   }
 
   cargarProveedoresYJaulas(): void {
@@ -47,25 +50,34 @@ export class RecepcionListComponent implements OnInit {
     });
   }
 
+  // Filtrar por una fecha específica
+  filtrarPorFecha(): void {
+    if (this.fechaFiltro) {
+      const fechaSeleccionada = new Date(this.fechaFiltro);
+
+      this.turnosFiltrados = this.turnos.filter(turno => {
+        const fechaTurno = new Date(turno.fecha); // Asegúrate de que el formato de turno.fecha es correcto
+        return fechaTurno.toDateString() === fechaSeleccionada.toDateString();
+      });
+    } else {
+      // Si no se selecciona una fecha, mostrar todos los turnos
+      this.turnosFiltrados = [...this.turnos];
+    }
+  }
+  
   iniciarRecepcion(turno: Turno): void {
     this.turnoSeleccionado = turno;
-  
-    // Verifica si el turno ya tiene una jaula asignada
+
     if (turno.idJaula) {
       const jaula = this.jaulasService.getJaulaById(turno.idJaula);
-  
-      // Si la jaula está en uso, mostrar el popup para seleccionar una nueva jaula
       if (jaula && jaula.enUso === 'S') {
-        console.log(`La jaula ${jaula.nombre} está en uso, mostrando el popup para seleccionar una nueva jaula.`);
-        this.mostrarPopup = true;  // Mostrar el popup para seleccionar jaula libre
-        this.esFinalizacion = false;  // Asegurar que no sea finalización
+        this.mostrarPopup = true;
+        this.esFinalizacion = false;
       } else {
-        // Si la jaula no está en uso, marcarla como en uso y continuar con el inicio de la recepción
         this.marcarJaulaEnUso(turno.idJaula);
-        this.actualizarEstadoTurno(turno);  // Cambiar el estado del turno a "en recepcion"
+        this.actualizarEstadoTurno(turno);
       }
     } else {
-      // Si el turno no tiene una jaula asignada, mostrar el popup para seleccionar una
       this.mostrarPopup = true;
       this.esFinalizacion = false;
     }
@@ -73,24 +85,17 @@ export class RecepcionListComponent implements OnInit {
 
   onPopupAceptar(jaulaId: number | null): void {
     if (jaulaId !== null && this.turnoSeleccionado) {
-      // Si el usuario selecciona una jaula, asignarla al turno
       this.turnoSeleccionado.idJaula = jaulaId;
-  
-      // Marcar la jaula seleccionada como "en uso"
       this.marcarJaulaEnUso(jaulaId);
-  
-      // Actualizar el turno en el sistema
       this.actualizarEstadoTurno(this.turnoSeleccionado);
     }
-  
-    // Cerrar el popup después de aceptar
     this.mostrarPopup = false;
   }
 
   marcarJaulaEnUso(idJaula: number): void {
     const jaula = this.jaulasService.getJaulaById(idJaula);
     if (jaula) {
-      jaula.enUso = 'S';  // Marcar la jaula como en uso
+      jaula.enUso = 'S';
       this.jaulasService.updateJaula(jaula.idJaula, jaula.nombre, jaula.enUso);
     }
   }
@@ -98,47 +103,35 @@ export class RecepcionListComponent implements OnInit {
   actualizarEstadoTurno(turno: Turno): void {
     const now = new Date();
     turno.horaInicioRecepcion = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-    turno.estado = 'en recepcion';  // Cambiar el estado del turno a "en recepcion"
-    this.turnosService.updateTurno(turno);  // Actualizar el turno en el sistema
-    this.buscarTurnos();  // Refrescar la lista de turnos
+    turno.estado = 'en recepcion';
+    this.turnosService.updateTurno(turno);
+    this.buscarTurnos();
   }
 
   finalizarRecepcion(turno: Turno): void {
     this.turnoSeleccionado = turno;
-  
-    // Verifica que el turno tiene una jaula asignada
     if (turno.idJaula) {
-      // Cambiar el estado de la jaula a 'N' (no en uso)
       this.liberarJaula(turno.idJaula);
     }
-  
-    // Actualiza la hora de fin de recepción
     const now = new Date();
     this.turnoSeleccionado.horaFinRecepcion = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-    this.turnoSeleccionado.estado = 'completado';  // Cambiar el estado del turno a "completado"
-  
-    // Actualizar el turno en el sistema
+    this.turnoSeleccionado.estado = 'completado';
     this.turnosService.updateTurno(this.turnoSeleccionado);
-  
-    // Refresca la lista de turnos
     this.buscarTurnos();
-  
-    // Cerrar el popup
     this.mostrarPopup = false;
   }
-  
+
   liberarJaula(idJaula: number): void {
     const jaula = this.jaulasService.getJaulaById(idJaula);
     if (jaula) {
-      jaula.enUso = 'N';  // Cambiar el estado de la jaula a "no en uso"
-      this.jaulasService.updateJaula(jaula.idJaula, jaula.nombre, jaula.enUso);  // Actualizar la jaula en el sistema
+      jaula.enUso = 'N';
+      this.jaulasService.updateJaula(jaula.idJaula, jaula.nombre, jaula.enUso);
     }
   }
-  
 
   verDetalles(turno: Turno): void {
     if (this.turnoSeleccionado === turno) {
-      this.turnoSeleccionado = null;  // Resetear selección temporalmente
+      this.turnoSeleccionado = null;
       setTimeout(() => {
         this.turnoSeleccionado = turno;
         this.mostrarDetallePopup = true;
