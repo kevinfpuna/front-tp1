@@ -94,9 +94,36 @@ export class RecepcionListComponent implements OnInit {
 
   finalizarRecepcion(turno: Turno): void {
     this.turnoSeleccionado = turno;
-    this.mostrarPopup = true;
-    this.esFinalizacion = true;
+  
+    // Verifica que el turno tiene una jaula asignada
+    if (turno.idJaula) {
+      // Cambiar el estado de la jaula a 'N' (no en uso)
+      this.liberarJaula(turno.idJaula);
+    }
+  
+    // Actualiza la hora de fin de recepción
+    const now = new Date();
+    this.turnoSeleccionado.horaFinRecepcion = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    this.turnoSeleccionado.estado = 'completado';  // Cambiar el estado del turno a "completado"
+  
+    // Actualizar el turno en el sistema
+    this.turnosService.updateTurno(this.turnoSeleccionado);
+  
+    // Refresca la lista de turnos
+    this.buscarTurnos();
+  
+    // Cerrar el popup
+    this.mostrarPopup = false;
   }
+  
+  liberarJaula(idJaula: number): void {
+    const jaula = this.jaulasService.getJaulaById(idJaula);
+    if (jaula) {
+      jaula.enUso = 'N';  // Cambiar el estado de la jaula a "no en uso"
+      this.jaulasService.updateJaula(jaula.idJaula, jaula.nombre, jaula.enUso);  // Actualizar la jaula en el sistema
+    }
+  }
+  
 
   verDetalles(turno: Turno): void {
     if (this.turnoSeleccionado === turno) {
