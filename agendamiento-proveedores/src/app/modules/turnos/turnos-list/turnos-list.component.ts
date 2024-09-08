@@ -9,15 +9,22 @@ import { Turno } from '../../../models/turno.model';
 })
 export class TurnosListComponent implements OnInit {
   turnos: Turno[] = [];
+  isExpanded: boolean[] = []; // Controlar la expansión de los detalles
 
   constructor(private turnosService: TurnosService) {}
 
   ngOnInit(): void {
     this.turnos = this.turnosService.getTurnos();
+    this.isExpanded = new Array(this.turnos.length).fill(false); // Inicializar los desplegables en estado cerrado
+  }
+
+  toggleDetalles(index: number): void {
+    this.isExpanded[index] = !this.isExpanded[index]; // Alternar la visibilidad de los detalles
   }
 
   deleteTurno(id: number): void {
     this.turnosService.deleteTurno(id);
     this.turnos = this.turnosService.getTurnos();
+    this.isExpanded = new Array(this.turnos.length).fill(false); // Resetear despliegue tras la eliminación
   }
 }

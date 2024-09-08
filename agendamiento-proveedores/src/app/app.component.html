@@ -2,11 +2,13 @@
   <header>
     <h1>{{ title }}</h1>
     <nav>
-      <a routerLink="/proveedores">Proveedores</a> |
-      <a routerLink="/productos">Productos</a> |
-      <a routerLink="/jaulas">Jaulas</a> |
-      <a routerLink="/turnos">Turnos</a> |
-      <a routerLink="/recepcion">Recepción</a>
+      <ul class="nav-links">
+        <li><a routerLink="/proveedores"><i class="fas fa-truck"></i> Proveedores</a></li>
+        <li><a routerLink="/productos"><i class="fas fa-box"></i> Productos</a></li>
+        <li><a routerLink="/jaulas"><i class="fas fa-cube"></i> Jaulas</a></li>
+        <li><a routerLink="/turnos"><i class="fas fa-calendar-alt"></i> Turnos</a></li>
+        <li><a routerLink="/recepcion"><i class="fas fa-clipboard-check"></i> Recepción</a></li>
+      </ul>
     </nav>
   </header>
   <main>

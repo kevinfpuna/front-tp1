@@ -1,17 +1,25 @@
-<div>
-  <h2>Lista de Proveedores</h2>
-  <input [(ngModel)]="filtro" placeholder="Filtrar por nombre" />
-  <button (click)="loadProveedores()">Refrescar</button>
-</div>
+<div class="proveedor-container">
+  <div class="header">
+    <h2>Lista de Proveedores</h2>
+    <div class="filter-section">
+      <input [(ngModel)]="filtro" placeholder="Filtrar por nombre" />
+      <button (click)="loadProveedores()">Refrescar</button>
+      <a routerLink="/proveedores/nuevo" class="btn add-btn">Nuevo Proveedor</a>
+    </div>
+  </div>
 
-<ul>
-  <li *ngFor="let proveedor of getFilteredProveedores()">
-    {{ proveedor.nombre }}
-    <button (click)="deleteProveedor(proveedor.idProveedor)">Eliminar</button>
-    <button [routerLink]="['/proveedores/editar', proveedor.idProveedor]">Editar</button>
-  </li>
-</ul>
-
-<div>
-  <a routerLink="/proveedores/nuevo">Agregar Nuevo Proveedor</a>
+  <ul class="proveedor-list">
+    <li class="proveedor-item" *ngFor="let proveedor of getFilteredProveedores()">
+      <span>{{ proveedor.nombre }}</span>
+      <div class="actions">
+        <!-- Iconos para Editar y Eliminar -->
+        <button class="btn icon-btn edit-btn" [routerLink]="['/proveedores/editar', proveedor.idProveedor]">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn icon-btn delete-btn" (click)="deleteProveedor(proveedor.idProveedor)">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </li>
+  </ul>
 </div>

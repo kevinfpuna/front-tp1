@@ -1,15 +1,17 @@
-<div>
+<div class="jaula-form">
   <h2>{{ jaulaId ? 'Editar Jaula' : 'Agregar Nueva Jaula' }}</h2>
 
   <label for="nombre">Nombre:</label>
-  <input [(ngModel)]="nombre" placeholder="Nombre de la jaula" />
+  <input id="nombre" [(ngModel)]="nombre" placeholder="Nombre de la jaula" />
 
   <label for="enUso">En Uso:</label>
-  <select [(ngModel)]="enUso">
+  <select id="enUso" [(ngModel)]="enUso">
     <option value="S">Sí</option>
     <option value="N">No</option>
   </select>
 
-  <button (click)="saveJaula()">Guardar</button>
-  <button routerLink="/jaulas">Cancelar</button>
+  <div class="button-group">
+    <button class="save-btn" (click)="saveJaula()">Guardar</button>
+    <button class="cancel-btn" routerLink="/jaulas">Cancelar</button>
+  </div>
 </div>

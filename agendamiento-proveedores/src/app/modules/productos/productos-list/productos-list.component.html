@@ -1,17 +1,25 @@
-<div>
-  <h2>Lista de Productos</h2>
-  <input [(ngModel)]="filtro" placeholder="Filtrar por nombre" />
-  <button (click)="loadProductos()">Refrescar</button>
-</div>
+<div class="producto-container">
+  <div class="header">
+    <h2>Lista de Productos</h2>
+    <div class="filter-section">
+      <input [(ngModel)]="filtro" placeholder="Filtrar por nombre" />
+      <button (click)="loadProductos()">Refrescar</button>
+      <a routerLink="/productos/nuevo" class="btn add-btn">Nuevo Producto</a>
+    </div>
+  </div>
 
-<ul>
-  <li *ngFor="let producto of getFilteredProductos()">
-    {{ producto.nombre }}
-    <button (click)="deleteProducto(producto.idProducto)">Eliminar</button>
-    <button [routerLink]="['/productos/editar', producto.idProducto]">Editar</button>
-  </li>
-</ul>
-
-<div>
-  <a routerLink="/productos/nuevo">Agregar Nuevo Producto</a>
+  <ul class="producto-list">
+    <li class="producto-item" *ngFor="let producto of getFilteredProductos()">
+      <span>{{ producto.nombre }}</span>
+      <div class="actions">
+        <!-- Iconos para Editar y Eliminar -->
+        <button class="btn icon-btn edit-btn" [routerLink]="['/productos/editar', producto.idProducto]">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn icon-btn delete-btn" (click)="deleteProducto(producto.idProducto)">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </li>
+  </ul>
 </div>

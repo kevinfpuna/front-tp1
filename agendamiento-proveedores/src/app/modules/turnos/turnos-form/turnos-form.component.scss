@@ -1,0 +1,124 @@
+.turno-form-container {
+  font-family: Arial, sans-serif;
+  max-width: 900px; /* Aumentamos el ancho máximo para acomodar más espacio */
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #f4f4f4; /* Fondo gris claro para todo el contenedor */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+  h2 {
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+  .form-columns {
+    display: flex;
+    gap: 50px; /* Aumentamos el espacio entre las dos columnas */
+    
+    .column {
+      flex: 1;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #007bff;
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+
+      label {
+        display: block;
+        font-size: 0.95rem;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+
+        &:focus {
+          border-color: #007bff;
+          outline: none;
+          box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+      }
+    }
+  }
+
+  /* Estilos para la tabla de productos */
+  .productos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  .productos-table th, .productos-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  .productos-table th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .productos-table td input.cantidad-input {
+    width: 80px;
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: right;
+  }
+
+  .productos-table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &.save-btn {
+        background-color: #28a745;
+        color: #fff;
+
+        &:hover {
+          background-color: #218838;
+        }
+      }
+
+      &.cancel-btn {
+        background-color: #6c757d;
+        color: #fff;
+
+        &:hover {
+          background-color: #5a6268;
+        }
+      }
+    }
+  }
+}

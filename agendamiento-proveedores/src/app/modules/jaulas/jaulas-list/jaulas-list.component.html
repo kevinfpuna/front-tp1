@@ -1,17 +1,30 @@
-<div>
-  <h2>Lista de Jaulas</h2>
-  <input [(ngModel)]="filtro" placeholder="Filtrar por nombre" />
-  <button (click)="loadJaulas()">Refrescar</button>
-</div>
+<div class="jaula-container">
+  <div class="header">
+    <h2>Lista de Jaulas</h2>
+    <div class="action-section">
+      <input [(ngModel)]="filtro" placeholder="Filtrar por nombre" />
+      <button (click)="loadJaulas()">Refrescar</button>
+      <a routerLink="/jaulas/nuevo" class="btn add-btn">Nueva Jaula</a>
+    </div>
+  </div>
 
-<ul>
-  <li *ngFor="let jaula of getFilteredJaulas()">
-    {{ jaula.nombre }} (En Uso: {{ jaula.enUso }})
-    <button (click)="deleteJaula(jaula.idJaula)">Eliminar</button>
-    <button [routerLink]="['/jaulas/editar', jaula.idJaula]">Editar</button>
-  </li>
-</ul>
-
-<div>
-  <a routerLink="/jaulas/nuevo">Agregar Nueva Jaula</a>
+  <ul class="jaula-list">
+    <li class="jaula-item" *ngFor="let jaula of getFilteredJaulas()">
+      <div class="info">
+        <span>{{ jaula.nombre }}</span>
+        <span class="badge" [ngClass]="{ 'in-use': jaula.enUso === 'S', 'not-in-use': jaula.enUso === 'N' }">
+          {{ jaula.enUso === 'S' ? 'En Uso' : 'No en Uso' }}
+        </span>
+      </div>
+      <div class="actions">
+        <!-- Iconos de editar y eliminar -->
+        <button class="btn icon-btn edit-btn" [routerLink]="['/jaulas/editar', jaula.idJaula]">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn icon-btn delete-btn" (click)="deleteJaula(jaula.idJaula)">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </li>
+  </ul>
 </div>

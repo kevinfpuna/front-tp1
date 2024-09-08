@@ -1,9 +1,11 @@
-<div>
+<div class="proveedor-form">
   <h2>{{ proveedorId ? 'Editar Proveedor' : 'Agregar Nuevo Proveedor' }}</h2>
 
   <label for="nombre">Nombre:</label>
-  <input [(ngModel)]="nombre" placeholder="Nombre del proveedor" />
+  <input id="nombre" [(ngModel)]="nombre" placeholder="Nombre del proveedor" />
 
-  <button (click)="saveProveedor()">Guardar</button>
-  <button routerLink="/proveedores">Cancelar</button>
+  <div class="button-group">
+    <button class="save-btn" (click)="saveProveedor()">Guardar</button>
+    <button class="cancel-btn" routerLink="/proveedores">Cancelar</button>
+  </div>
 </div>

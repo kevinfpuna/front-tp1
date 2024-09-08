@@ -27,7 +27,7 @@ export class TurnosFormComponent implements OnInit {
     horaFinAgendamiento: '',
     idProveedor: 0,
     idJaula: 0,
-    estado: 'pendiente',  // Inicializar el estado como 'pendiente'
+    estado: 'pendiente',
     horaInicioRecepcion: '',
     horaFinRecepcion: '',
     detalles: []

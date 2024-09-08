@@ -1,9 +1,11 @@
-<div>
+<div class="producto-form">
   <h2>{{ productoId ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h2>
 
   <label for="nombre">Nombre:</label>
-  <input [(ngModel)]="nombre" placeholder="Nombre del producto" />
+  <input id="nombre" [(ngModel)]="nombre" placeholder="Nombre del producto" />
 
-  <button (click)="saveProducto()">Guardar</button>
-  <button routerLink="/productos">Cancelar</button>
+  <div class="button-group">
+    <button class="save-btn" (click)="saveProducto()">Guardar</button>
+    <button class="cancel-btn" routerLink="/productos">Cancelar</button>
+  </div>
 </div>

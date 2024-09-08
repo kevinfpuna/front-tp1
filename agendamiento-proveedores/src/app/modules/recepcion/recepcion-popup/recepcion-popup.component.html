@@ -2,16 +2,16 @@
   <div class="popup-content">
     <h3>{{ esFinalizacion ? 'Finalizar Recepción' : 'Iniciar Recepción' }}</h3>
 
-    <div *ngIf="!esFinalizacion">
+    <div *ngIf="!esFinalizacion" class="input-group">
       <label for="jaula">Seleccionar Jaula:</label>
-      <select [(ngModel)]="jaulaSeleccionada">
+      <select id="jaula" [(ngModel)]="jaulaSeleccionada">
         <option *ngFor="let jaula of jaulasDisponibles" [value]="jaula.idJaula">{{ jaula.nombre }}</option>
       </select>
     </div>
 
     <div class="popup-actions">
-      <button (click)="seleccionarJaula()">Aceptar</button>
-      <button (click)="cancelarPopup()">Cancelar</button>
+      <button class="btn accept" (click)="seleccionarJaula()">Aceptar</button>
+      <button class="btn cancel" (click)="cancelarPopup()">Cancelar</button>
     </div>
   </div>
 </div>
