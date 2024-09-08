@@ -19,9 +19,9 @@
       <tr *ngFor="let turno of turnos">
         <td>{{ turno.horaInicioAgendamiento }}</td>
         <td>{{ turno.horaFinAgendamiento }}</td>
-        <td>{{ proveedores[turno.idProveedor] || 'N/A' }}</td> <!-- Mostrar nombre del proveedor -->
+        <td>{{ proveedores[turno.idProveedor] || 'N/A' }}</td>
         <td>{{ turno.estado }}</td>
-        <td>{{ turno.idJaula ? jaulas[turno.idJaula] || 'Sin Asignar' : 'Sin Asignar' }}</td> <!-- Mostrar nombre de la jaula -->
+        <td>{{ turno.idJaula ? jaulas[turno.idJaula] || 'Sin Asignar' : 'Sin Asignar' }}</td>
         <td>{{ turno.horaInicioRecepcion ? turno.horaInicioRecepcion : 'N/A' }}</td>
         <td>{{ turno.horaFinRecepcion ? turno.horaFinRecepcion : 'N/A' }}</td>
         <td>
@@ -41,9 +41,16 @@
     </tbody>
   </table>
 
-  <!-- Popup para iniciar o finalizar la recepción -->
-  <app-recepcion-popup *ngIf="mostrarPopup" [turnoSeleccionado]="turnoSeleccionado" [esFinalizacion]="esFinalizacion" (aceptar)="onPopupAceptar()"></app-recepcion-popup>
+  <!-- Popup para seleccionar la jaula al iniciar la recepción -->
+  <app-recepcion-popup *ngIf="mostrarPopup" 
+    [turnoSeleccionado]="turnoSeleccionado" 
+    [esFinalizacion]="esFinalizacion" 
+    (aceptar)="onPopupAceptar($event)">
+  </app-recepcion-popup>
 
   <!-- Popup para mostrar los detalles del turno -->
-  <app-recepcion-detalle-popup *ngIf="mostrarDetallePopup" [turno]="turnoSeleccionado" (cerrar)="cerrarDetallePopup()"></app-recepcion-detalle-popup>
+  <app-recepcion-detalle-popup *ngIf="mostrarDetallePopup" 
+    [turno]="turnoSeleccionado" 
+    (cerrar)="cerrarDetallePopup()">
+  </app-recepcion-detalle-popup>
 </div>

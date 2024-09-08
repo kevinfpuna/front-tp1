@@ -17,12 +17,14 @@ export class JaulasService {
     const data = localStorage.getItem(this.STORAGE_KEY);
     if (data) {
       this.jaulas = JSON.parse(data);
+      console.log('Jaulas cargadas desde localStorage:', this.jaulas);
       this.nextId = this.jaulas.length > 0 ? Math.max(...this.jaulas.map(j => j.idJaula)) + 1 : 1;
-    }
-    else {
+    } else {
       this.jaulas = [];  // Inicializa como un arreglo vacío si no hay datos en localStorage
+      console.log('No se encontraron jaulas en localStorage');
     }
   }
+  
 
   private saveToLocalStorage(): void {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.jaulas));
@@ -53,9 +55,15 @@ export class JaulasService {
     if (jaulaIndex !== -1) {
       this.jaulas[jaulaIndex].nombre = nombre;
       this.jaulas[jaulaIndex].enUso = enUso;
-      this.saveToLocalStorage();  // Asegúrate de que los cambios se guarden
+  
+      // Asegúrate de que los cambios se guarden en localStorage
+      console.log(`Actualizando jaula ${idJaula}: enUso = ${enUso}`);
+      this.saveToLocalStorage();
+    } else {
+      console.log(`Jaula con id ${idJaula} no encontrada`);
     }
   }
+  
 
   deleteJaula(id: number): void {
     this.jaulas = this.jaulas.filter(jaula => jaula.idJaula !== id);

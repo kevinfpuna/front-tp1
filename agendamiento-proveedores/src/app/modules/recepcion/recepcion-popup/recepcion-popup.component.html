@@ -1,16 +1,18 @@
 <div class="popup-background">
   <div class="popup-content">
-    <h3>{{ esFinalizacion ? 'Finalizar Recepción' : 'Iniciar Recepción' }}</h3>
+    <h3>Seleccionar Jaula</h3>
 
-    <div *ngIf="!esFinalizacion" class="input-group">
-      <label for="jaula">Seleccionar Jaula:</label>
+    <div *ngIf="jaulasDisponibles.length > 0">
+      <label for="jaula">Jaula disponible:</label>
       <select id="jaula" [(ngModel)]="jaulaSeleccionada">
-        <option *ngFor="let jaula of jaulasDisponibles" [value]="jaula.idJaula">{{ jaula.nombre }}</option>
+        <option *ngFor="let jaula of jaulasDisponibles" [value]="jaula.idJaula">
+          {{ jaula.nombre }}
+        </option>
       </select>
     </div>
 
     <div class="popup-actions">
-      <button class="btn accept" (click)="seleccionarJaula()">Aceptar</button>
+      <button class="btn accept" (click)="aceptarSeleccion()">Aceptar</button> <!-- Llamar la función sin argumentos -->
       <button class="btn cancel" (click)="cancelarPopup()">Cancelar</button>
     </div>
   </div>
