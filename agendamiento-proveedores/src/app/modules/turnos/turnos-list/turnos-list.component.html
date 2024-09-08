@@ -26,8 +26,8 @@
           <td>{{ turno.fecha }}</td>
           <td>{{ turno.horaInicioAgendamiento }}</td>
           <td>{{ turno.horaFinAgendamiento }}</td>
-          <td>{{ turno.idProveedor }}</td>
-          <td>{{ turno.idJaula || 'N/A' }}</td>
+          <td>{{ proveedores[turno.idProveedor] || 'N/A' }}</td> <!-- Aquí el cambio -->
+          <td>{{ jaulas[turno.idJaula!] || 'N/A' }}</td>
           <td>{{ turno.horaInicioRecepcion || 'N/A' }}</td>
           <td>{{ turno.horaFinRecepcion || 'N/A' }}</td>
           <td class="actions">
