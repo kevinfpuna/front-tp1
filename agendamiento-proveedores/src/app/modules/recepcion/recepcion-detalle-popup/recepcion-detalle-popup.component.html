@@ -1,12 +1,5 @@
 <div class="popup-background" *ngIf="turno">
   <div class="popup-content">
-    <h3>Detalles del Turno #{{ turno.idTurno }}</h3>
-    <p><strong>Fecha:</strong> {{ turno.fecha }}</p>
-    <p><strong>Hora Inicio:</strong> {{ turno.horaInicioAgendamiento }}</p>
-    <p><strong>Hora Fin:</strong> {{ turno.horaFinAgendamiento }}</p>
-    <p><strong>Proveedor:</strong> {{ turno.idProveedor }}</p>
-    <p><strong>Jaula:</strong> {{ turno.idJaula ? turno.idJaula : 'Sin Asignar' }}</p>
-
     <h4>Productos Asociados</h4>
     <table>
       <thead>
