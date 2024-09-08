@@ -49,14 +49,25 @@ export class RecepcionListComponent implements OnInit {
 
   iniciarRecepcion(turno: Turno): void {
     this.turnoSeleccionado = turno;
-    
-    // Si el turno no tiene una jaula asignada, mostramos el popup para seleccionar una jaula
-    if (!turno.idJaula) {
+  
+    // Verifica si el turno ya tiene una jaula asignada
+    if (turno.idJaula) {
+      const jaula = this.jaulasService.getJaulaById(turno.idJaula);
+  
+      // Si la jaula está en uso, mostrar el popup para seleccionar una nueva jaula
+      if (jaula && jaula.enUso === 'S') {
+        console.log(`La jaula ${jaula.nombre} está en uso, mostrando el popup para seleccionar una nueva jaula.`);
+        this.mostrarPopup = true;  // Mostrar el popup para seleccionar jaula libre
+        this.esFinalizacion = false;  // Asegurar que no sea finalización
+      } else {
+        // Si la jaula no está en uso, marcarla como en uso y continuar con el inicio de la recepción
+        this.marcarJaulaEnUso(turno.idJaula);
+        this.actualizarEstadoTurno(turno);  // Cambiar el estado del turno a "en recepcion"
+      }
+    } else {
+      // Si el turno no tiene una jaula asignada, mostrar el popup para seleccionar una
       this.mostrarPopup = true;
       this.esFinalizacion = false;
-    } else {
-      this.marcarJaulaEnUso(turno.idJaula);
-      this.actualizarEstadoTurno(turno);  // Actualiza el turno a "en recepcion"
     }
   }
 
@@ -64,14 +75,14 @@ export class RecepcionListComponent implements OnInit {
     if (jaulaId !== null && this.turnoSeleccionado) {
       // Si el usuario selecciona una jaula, asignarla al turno
       this.turnoSeleccionado.idJaula = jaulaId;
-
+  
       // Marcar la jaula seleccionada como "en uso"
       this.marcarJaulaEnUso(jaulaId);
-
+  
       // Actualizar el turno en el sistema
       this.actualizarEstadoTurno(this.turnoSeleccionado);
     }
-
+  
     // Cerrar el popup después de aceptar
     this.mostrarPopup = false;
   }
@@ -79,7 +90,7 @@ export class RecepcionListComponent implements OnInit {
   marcarJaulaEnUso(idJaula: number): void {
     const jaula = this.jaulasService.getJaulaById(idJaula);
     if (jaula) {
-      jaula.enUso = 'S'; // Marcar la jaula como en uso
+      jaula.enUso = 'S';  // Marcar la jaula como en uso
       this.jaulasService.updateJaula(jaula.idJaula, jaula.nombre, jaula.enUso);
     }
   }
@@ -87,7 +98,7 @@ export class RecepcionListComponent implements OnInit {
   actualizarEstadoTurno(turno: Turno): void {
     const now = new Date();
     turno.horaInicioRecepcion = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-    turno.estado = 'en recepcion';  // Cambiar el estado del turno
+    turno.estado = 'en recepcion';  // Cambiar el estado del turno a "en recepcion"
     this.turnosService.updateTurno(turno);  // Actualizar el turno en el sistema
     this.buscarTurnos();  // Refrescar la lista de turnos
   }
